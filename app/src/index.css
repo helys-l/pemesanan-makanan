@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.hide-bar {
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+}
+
+.hide-bar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.card {
+  background-color: #F8F7F9;
+}
+.icon {
+  background-color: #FDFDFE ;
+}
+/* 
+
+--hover menu hitam: #0E0D0D;
+--icon: #FDFDFE;
+--red: #DC2318;
+--bg: #F0EFF3;
+--card: #F8F7F9; */
