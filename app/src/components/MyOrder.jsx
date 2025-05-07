@@ -123,11 +123,19 @@ export default function MyOrder({ orders, setOrders }) {
           orders,
         }));
 
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwddLynhZVCnHT1ZiEidom0BEmXYbCKV2vGwmX0Il8Fo2V3r-Jda7pDJXrRIIlTitHJ/exec", {
+        const response = await fetch("https://fringe-meowing-otter.glitch.me/submit", {
           method: "POST",
-          body: formData,
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name,
+            seat: selected,
+            note,
+            orders,
+          }),
         });
-
+        
         const result = await response.json();
         if (result.result === "success") {
           toast.success("Pesanan berhasil dikirim!");
