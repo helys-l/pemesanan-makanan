@@ -107,47 +107,47 @@ export default function MyOrder({ orders, setOrders }) {
         <Toaster position="top-center" reverseOrder={false} />
 
         <div
-        className='w-[90%] h-12 mx-auto bg-[#DC2318] rounded-full flex justify-center items-center text-white hover:scale-95 cursor-pointer'
-        onClick={async () => {
-            if (orders.length === 0) {
-              toast.error("Belum ada pesanan, silakan pesan dahulu!");
-            } else if (!name.trim() || !selected) {
-              toast.error("Isi Nama dan Nomor Tempat Duduk terlebih dahulu!");
-            } else {
-              try {
-                const response = await fetch("https://script.google.com/macros/s/AKfycbwddLynhZVCnHT1ZiEidom0BEmXYbCKV2vGwmX0Il8Fo2V3r-Jda7pDJXrRIIlTitHJ/exec", {
-                  method: "POST",
-                  body: JSON.stringify({
-                    name,
-                    seat: selected,
-                    note,
-                    orders,
-                  }),
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                });
-          
-                const result = await response.json();
-                if (result.result === "success") {
-                  toast.success("Pesanan berhasil dikirim!");
-                  setOrders([]); // reset pesanan
-                  setName("");
-                  setSelected(null);
-                  setNote("");
-                } else {
-                  toast.error("Gagal mengirim pesanan!");
-                }
-              } catch (error) {
-                toast.error("Terjadi kesalahan saat mengirim pesanan.");
-                console.error(error);
-              }
-            }
-          }}
-          
-        >
-        Order
-        </div>
+  className='w-[90%] h-12 mx-auto bg-[#DC2318] rounded-full flex justify-center items-center text-white hover:scale-95 cursor-pointer'
+  onClick={async () => {
+    if (orders.length === 0) {
+      toast.error("Belum ada pesanan, silakan pesan dahulu!");
+    } else if (!name.trim() || !selected) {
+      toast.error("Isi Nama dan Nomor Tempat Duduk terlebih dahulu!");
+    } else {
+      try {
+        const formData = new URLSearchParams();
+        formData.append("data", JSON.stringify({
+          name,
+          seat: selected,
+          note,
+          orders,
+        }));
+
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwddLynhZVCnHT1ZiEidom0BEmXYbCKV2vGwmX0Il8Fo2V3r-Jda7pDJXrRIIlTitHJ/exec", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+        if (result.result === "success") {
+          toast.success("Pesanan berhasil dikirim!");
+          setOrders([]);
+          setName("");
+          setSelected(null);
+          setNote("");
+        } else {
+          toast.error("Gagal mengirim pesanan!");
+        }
+      } catch (error) {
+        toast.error("Terjadi kesalahan saat mengirim pesanan.");
+        console.error(error);
+      }
+    }
+  }}
+>
+  Order
+</div>
+
 
       </div>
     );
