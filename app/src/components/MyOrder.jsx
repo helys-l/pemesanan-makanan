@@ -46,7 +46,7 @@ export default function MyOrder({ orders, setOrders }) {
         <h1 className="w-full h-10 md:h-12 pl-8 font-black flex items-center text-sm sm:text-md md:text-xl">My Order</h1>
         <input
         type="text"
-        className='w-[90%] ml-5 border-none focus:outline-none px-2 placeholder:px-2'
+        className='w-[90%] ml-5 border-none px-2 placeholder:px-3 focus:outline-none focus:ring-2 focus:ring-[#DC2318]'
         placeholder='Masukkan Nama'
         value={name}
             onChange={(e) => setName(e.target.value)}
