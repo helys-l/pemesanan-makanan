@@ -33,7 +33,7 @@ export default function MyOrder({ orders, setOrders }) {
   
     return (
       
-      <div className="Container rounded-xl h-auto min-h-[32rem] gap-3 md:w-[30%] card">
+      <div className="Container rounded-xl h-auto py-6 md:min-h-[32rem] gap-3 md:w-[30%] card">
         <form name="Submit-Form-to-Google-Sheets" className="hidden">
           <input type="text" name="Nama Pemesan" />
           <input type="text" name="Tanggal Pemesanan" />
