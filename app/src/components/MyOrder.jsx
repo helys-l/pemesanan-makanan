@@ -9,6 +9,7 @@ export default function MyOrder({ orders, setOrders }) {
     const [name, setName] = useState("");
     const total = orders.reduce((sum, item) => sum + item.quantity * item.harga, 0);
     const options = Array.from({ length: 30 }, (_, i) => `No. ${i + 1}`);
+    const [isSubmitting, setIsSubmitting] = useState(false);
   
     const increaseQuantity = (index) => {
       const updatedOrders = [...orders];
@@ -29,6 +30,8 @@ export default function MyOrder({ orders, setOrders }) {
       updatedOrders.splice(index, 1); // hapus satu item di posisi index
       setOrders(updatedOrders);
     };
+
+
     
   
     return (
@@ -130,62 +133,64 @@ export default function MyOrder({ orders, setOrders }) {
         </div>
         <Toaster position="top-center" reverseOrder={false} />
 
-        <button type='submit'
-  className='w-[90%] h-12 mx-auto bg-[#DC2318] rounded-full flex justify-center items-center text-white hover:scale-95 cursor-pointer'
+        <button
+  type='submit'
+  disabled={isSubmitting}
+  className={`w-[90%] h-12 mx-auto rounded-full flex justify-center items-center text-white transition duration-200 ${
+    isSubmitting ? 'bg-gray-400 opacity-50 cursor-not-allowed' : 'bg-[#DC2318] hover:scale-95 cursor-pointer'
+  }`}
   onClick={async () => {
+    if (isSubmitting) return;
+
     if (orders.length === 0) {
       toast.error("Belum ada pesanan, silakan pesan dahulu!");
-    } else if (!name.trim() || !selected) {
+      return;
+    }
+    if (!name.trim() || !selected) {
       toast.error("Isi Nama dan Nomor Tempat Duduk terlebih dahulu!");
-    } else {
-      try {
-        const form = document.forms['Submit-Form-to-Google-Sheets']
+      return;
+    }
 
-        form.elements['Nama Pemesan'].value = name;
-        form.elements['Tanggal Pemesanan'].value = new Date().toLocaleString(); // tanggal dan waktu lokal
-        form.elements['No.Tempat Duduk'].value = selected;
-        form.elements['Pesanan'].value = orders.map(item => {
-          const levelText = item.level !== undefined ? `${item.level}` : "level 0";
-          return `(${item.nama}, ${levelText}, jumlah ${item.quantity})`;
-        }).join(",\n ");
-        form.elements['Total'].value =`Rp.${total}` ;
-        form.elements['Catatan'].value = note;
-        
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbylAV385tVeHuUJ4fEYjZtRJXhQZPwBle4_GLTXHi6uTJIKOPEMwm_1YSXQb6r5F4A8/exec'
+    try {
+      toast.success("Pesanan berhasil dikirim!");
+      setIsSubmitting(true);
 
-        await fetch(scriptURL, {
-          method: 'POST',
-          body: new FormData(form)
-        })
-          .then(response => {
-            console.log('Success!', response);
-            toast.success("Pesanan berhasil dikirim!");
-            
-            setOrders([]);
-            setName("");
-            setSelected(null);
-            setNote("");
-        
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 3000);
-          })
-          .catch(error => {
-            toast.error("Terjadi kesalahan saat mengirim pesanan.");
-            console.error("Error!", error.message);
-          });
-        
-            
-        
-      } catch (error) {
-        toast.error("Terjadi kesalahan saat mengirim pesanan.");
-        console.error(error);
-      }
+      const form = document.forms['Submit-Form-to-Google-Sheets'];
+      form.elements['Nama Pemesan'].value = name;
+      form.elements['Tanggal Pemesanan'].value = new Date().toLocaleString();
+      form.elements['No.Tempat Duduk'].value = selected;
+      form.elements['Pesanan'].value = orders.map(item => {
+        const levelText = item.level !== undefined ? `${item.level}` : "level 0";
+        return `(${item.nama}, ${levelText}, jumlah ${item.quantity})`;
+      }).join(",\n ");
+      form.elements['Total'].value = `Rp.${total}`;
+      form.elements['Catatan'].value = note;
+
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbylAV385tVeHuUJ4fEYjZtRJXhQZPwBle4_GLTXHi6uTJIKOPEMwm_1YSXQb6r5F4A8/exec';
+
+      await fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(form)
+      });
+
+      
+      setOrders([]);
+      setName("");
+      setSelected(null);
+      setNote("");
+      setIsSubmitting(false);
+
+    } catch (error) {
+      toast.error("Terjadi kesalahan saat mengirim pesanan.");
+      console.error(error);
+    } finally {
+      setIsSubmitting(false); // aktifkan kembali tombol
     }
   }}
 >
-  Order
+  {isSubmitting ? "Mengirim..." : "Order"}
 </button>
+
 
 
       </div>
