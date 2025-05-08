@@ -46,7 +46,7 @@ export default function MyOrder({ orders, setOrders }) {
         <h1 className="w-full h-10 md:h-12 pl-8 font-black flex items-center text-sm sm:text-md md:text-xl">My Order</h1>
         <input
         type="text"
-        className='w-[90%] ml-5 border-none focus:outline-none placeholder:px-2'
+        className='w-[90%] ml-5 border-none focus:outline-none px-2 placeholder:px-2'
         placeholder='Masukkan Nama'
         value={name}
             onChange={(e) => setName(e.target.value)}
@@ -54,12 +54,12 @@ export default function MyOrder({ orders, setOrders }) {
             <Combobox value={selected} onChange={setSelected}>
             <div className="relative w-[90%] ml-5">
                 <Combobox.Input
-                className="w-full h-10 rounded-lg bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]"
+                className="w-full h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]"
                 displayValue={(seat) => seat}
                 onChange={() => {}}
                 placeholder="Pilih No. Tempat Duduk"
                 />
-                <Combobox.Options className="absolute mt-1 w-full max-h-60 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+                <Combobox.Options className="absolute z-10 mt-1 w-full max-h-60 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
                 {options.map((opt, idx) => (
                     <Combobox.Option
                     key={idx}
@@ -77,9 +77,9 @@ export default function MyOrder({ orders, setOrders }) {
             </div>
         </Combobox>
         <p className='w-full text-sm font-medium pl-8 text-stone-500'>{orders.length} Positions</p>
-        <div className='w-[80%] min-h-[40%] h-auto py-3 mx-auto mt-3 hide-bar overflow-y-scroll'>
+        <div className='w-[80%] min-h-[40%] z-0 h-auto py-3 mx-auto mt-3 hide-bar overflow-y-scroll'>
           {orders.map((item, index) => (
-            <div key={index} className='relative w-full h-20 rounded-lg gap-3 mt-2 border border-dashed flex justify-between px-2 items-center'>
+            <div key={index} className='relative z-0 w-full h-20 rounded-lg gap-3 mt-2 border border-dashed flex justify-between px-2 items-center'>
               <button
                 className="absolute -top-2 right-2 w-6 h-6 bg-[#DC2318] text-white rounded-full text-xs flex items-center justify-center shadow-md hover:scale-110"
                 onClick={() => removeItem(index)}
