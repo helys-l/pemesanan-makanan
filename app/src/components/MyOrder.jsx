@@ -23,9 +23,26 @@ export default function MyOrder({ orders, setOrders }) {
         setOrders(updatedOrders);
       }
     };
+
+    const removeItem = (index) => {
+      const updatedOrders = [...orders];
+      updatedOrders.splice(index, 1); // hapus satu item di posisi index
+      setOrders(updatedOrders);
+    };
+    
   
     return (
+      
       <div className="Container rounded-xl h-auto min-h-[32rem] gap-3 md:w-[30%] card">
+        <form name="Submit-Form-to-Google-Sheets" className="hidden">
+          <input type="text" name="Nama Pemesan" />
+          <input type="text" name="Tanggal Pemesanan" />
+          <input type="text" name="No.Tempat Duduk" />
+          <input type="text" name="Pesanan" />
+          <input type="text" name="Total" />
+          <input type="text" name="Catatan" />
+        </form>
+        
         <h1 className="w-full h-10 md:h-12 pl-8 font-black flex items-center text-sm sm:text-md md:text-xl">My Order</h1>
         <input
         type="text"
@@ -62,7 +79,14 @@ export default function MyOrder({ orders, setOrders }) {
         <p className='w-full text-sm font-medium pl-8 text-stone-500'>{orders.length} Positions</p>
         <div className='w-[80%] min-h-[40%] h-auto py-3 mx-auto mt-3 hide-bar overflow-y-scroll'>
           {orders.map((item, index) => (
-            <div key={index} className='w-full h-20 rounded-lg gap-3 mt-2 border border-dashed flex justify-between px-2 items-center'>
+            <div key={index} className='relative w-full h-20 rounded-lg gap-3 mt-2 border border-dashed flex justify-between px-2 items-center'>
+              <button
+                className="absolute -top-2 right-2 w-6 h-6 bg-[#DC2318] text-white rounded-full text-xs flex items-center justify-center shadow-md hover:scale-110"
+                onClick={() => removeItem(index)}
+                title="Hapus pesanan"
+              >
+                ×
+              </button>
               <div className='h-[95%] aspect-square'><img src={item.gambar} className='w-full h-full' alt={item.nama} /></div>
               <div className='h-[95%] w-2/3'>
                 <h3 className='text-sm font-medium md:text-xs lg:text-sm'>{item.nama}</h3>
@@ -106,7 +130,7 @@ export default function MyOrder({ orders, setOrders }) {
         </div>
         <Toaster position="top-center" reverseOrder={false} />
 
-        <div
+        <button type='submit'
   className='w-[90%] h-12 mx-auto bg-[#DC2318] rounded-full flex justify-center items-center text-white hover:scale-95 cursor-pointer'
   onClick={async () => {
     if (orders.length === 0) {
@@ -115,37 +139,44 @@ export default function MyOrder({ orders, setOrders }) {
       toast.error("Isi Nama dan Nomor Tempat Duduk terlebih dahulu!");
     } else {
       try {
-        const formData = new URLSearchParams();
-        formData.append("data", JSON.stringify({
-          name,
-          seat: selected,
-          note,
-          orders,
-        }));
+        const form = document.forms['Submit-Form-to-Google-Sheets']
 
-        const response = await fetch("https://fringe-meowing-otter.glitch.me/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            name,
-            seat: selected,
-            note,
-            orders,
-          }),
-        });
+        form.elements['Nama Pemesan'].value = name;
+        form.elements['Tanggal Pemesanan'].value = new Date().toLocaleString(); // tanggal dan waktu lokal
+        form.elements['No.Tempat Duduk'].value = selected;
+        form.elements['Pesanan'].value = orders.map(item => {
+          const levelText = item.level !== undefined ? `${item.level}` : "level 0";
+          return `(${item.nama}, ${levelText}, jumlah ${item.quantity})`;
+        }).join(",\n ");
+        form.elements['Total'].value =`Rp.${total}` ;
+        form.elements['Catatan'].value = note;
         
-        const result = await response.json();
-        if (result.result === "success") {
-          toast.success("Pesanan berhasil dikirim!");
-          setOrders([]);
-          setName("");
-          setSelected(null);
-          setNote("");
-        } else {
-          toast.error("Gagal mengirim pesanan!");
-        }
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbylAV385tVeHuUJ4fEYjZtRJXhQZPwBle4_GLTXHi6uTJIKOPEMwm_1YSXQb6r5F4A8/exec'
+
+        await fetch(scriptURL, {
+          method: 'POST',
+          body: new FormData(form)
+        })
+          .then(response => {
+            console.log('Success!', response);
+            toast.success("Pesanan berhasil dikirim!");
+            
+            setOrders([]);
+            setName("");
+            setSelected(null);
+            setNote("");
+        
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 3000);
+          })
+          .catch(error => {
+            toast.error("Terjadi kesalahan saat mengirim pesanan.");
+            console.error("Error!", error.message);
+          });
+        
+            
+        
       } catch (error) {
         toast.error("Terjadi kesalahan saat mengirim pesanan.");
         console.error(error);
@@ -154,7 +185,7 @@ export default function MyOrder({ orders, setOrders }) {
   }}
 >
   Order
-</div>
+</button>
 
 
       </div>
