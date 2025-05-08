@@ -46,13 +46,13 @@ export default function MyOrder({ orders, setOrders }) {
         <h1 className="w-full h-10 md:h-12 pl-8 font-black flex items-center text-sm sm:text-md md:text-xl">My Order</h1>
         <input
         type="text"
-        className='w-[90%] ml-5 border-none px-2 placeholder:px-3 focus:outline-none focus:ring-2 focus:ring-[#DC2318]'
+        className='w-[90%] ml-5  h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318] mb-3'
         placeholder='Masukkan Nama'
         value={name}
             onChange={(e) => setName(e.target.value)}
             />
             <Combobox value={selected} onChange={setSelected}>
-            <div className="relative w-[90%] ml-5">
+            <div className="relative w-[90%] ml-5 mb-2">
                 <Combobox.Input
                 className="w-full h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]"
                 displayValue={(seat) => seat}
@@ -119,7 +119,7 @@ export default function MyOrder({ orders, setOrders }) {
 
         <input
             type="text"
-            className='w-[90%] ml-5 border-none focus:outline-none placeholder:px-2'
+            className='w-[90%] ml-5  h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]'
             placeholder='Catatan'
             value={note}
             onChange={(e) => setNote(e.target.value)}
