@@ -59,7 +59,7 @@ export default function MyOrder({ orders, setOrders }) {
                 onChange={() => {}}
                 placeholder="Pilih No. Tempat Duduk"
                 />
-                <Combobox.Options className="absolute z-10 mt-1 w-full max-h-60 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+                <Combobox.Options className="absolute z-10 mt-1 w-full max-h-60 overflow-scrol hide-bar rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
                 {options.map((opt, idx) => (
                     <Combobox.Option
                     key={idx}
