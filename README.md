@@ -18,7 +18,7 @@ Aplikasi ini merupakan platform sederhana untuk pemesanan ayam UMKM yang terdiri
 
 - **Frontend**: [Vite](https://vitejs.dev/), [React.js](https://reactjs.org/), [Tailwind CSS](https://tailwindcss.com/)
 - **Backend/Database**: [Firebase Firestore](https://firebase.google.com/products/firestore)
-- **Hosting**: [Vercel](https://vercel.com/)
+- **Hosting**: [Railway](https://railway.com/)
 - **Integrasi Spreadsheet**: Google Spreadsheet sebagai tujuan pengiriman data pesanan dari pelanggan
 
 ---
