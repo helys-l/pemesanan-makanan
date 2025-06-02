@@ -1,5 +1,5 @@
-
-export const makanan = [
+// data awal
+const makanan = [
     {
       nama: "Ayam Geprek",
       deskripsi: "Ayam goreng tepung dengan sambal pedas yang menggigit. Kombinasi sempurna yang bikin ketagihan!",
@@ -30,7 +30,7 @@ export const makanan = [
     },
   ];
   
-  export const minuman = [
+  const minuman = [
     {
       nama: "Es Teh Manis",
       deskripsi: "Teh hitam manis dengan es batu",
@@ -64,7 +64,7 @@ export const makanan = [
     },
   ];
   
-  export const menuTambahan = [
+  const menuTambahan = [
     {
       nama: "Kerupuk",
       deskripsi: "Kerupuk gurih renyah",

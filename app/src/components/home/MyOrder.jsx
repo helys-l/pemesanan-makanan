@@ -37,12 +37,12 @@ export default function MyOrder({ orders, setOrders }) {
     return (
       
       <div className="Container rounded-xl h-auto py-6 md:min-h-[32rem] gap-3 md:w-[30%] card">
-        <form name="Submit-Form-to-Google-Sheets" className="hidden">
+        <form name="Pesanan" className="hidden">
           <input type="text" name="Nama Pemesan" />
           <input type="text" name="Tanggal Pemesanan" />
-          <input type="text" name="No.Tempat Duduk" />
+          <input type="text" name="No. Tempat Duduk" />
           <input type="text" name="Pesanan" />
-          <input type="text" name="Total" />
+          <input type="text" name="Total Harga" />
           <input type="text" name="Catatan" />
         </form>
         
@@ -155,18 +155,21 @@ export default function MyOrder({ orders, setOrders }) {
       toast.success("Pesanan berhasil dikirim!");
       setIsSubmitting(true);
 
-      const form = document.forms['Submit-Form-to-Google-Sheets'];
+      const form = document.forms['Pesanan'];
       form.elements['Nama Pemesan'].value = name;
-      form.elements['Tanggal Pemesanan'].value = new Date().toLocaleString();
-      form.elements['No.Tempat Duduk'].value = selected;
+      const today = new Date();
+      const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+      form.elements['Tanggal Pemesanan'].value = formattedDate;
+
+      form.elements['No. Tempat Duduk'].value = selected;
       form.elements['Pesanan'].value = orders.map(item => {
         const levelText = item.level !== undefined ? `${item.level}` : "level 0";
         return `(${item.nama}, ${levelText}, jumlah ${item.quantity})`;
       }).join(",\n ");
-      form.elements['Total'].value = `Rp.${total}`;
+      form.elements['Total Harga'].value = total;
       form.elements['Catatan'].value = note;
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbylAV385tVeHuUJ4fEYjZtRJXhQZPwBle4_GLTXHi6uTJIKOPEMwm_1YSXQb6r5F4A8/exec';
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyUP0k0uTXcogk5AQZdGo8mOkcje2zBz_yPtfzCHKAZHrllvoEpCDQ4dih3X02OTGfTdA/exec';
 
       await fetch(scriptURL, {
         method: 'POST',

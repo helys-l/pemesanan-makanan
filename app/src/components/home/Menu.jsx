@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Menu({ selectedMenu, setSelectedMenu }) {
+    const navigate = useNavigate();
     return (
         <header className="container rounded-full h-12 mx-auto sm:h-16 md:h-20 card justify-between gap-x-3 items-center flex px-4 ">
             <div className="h-10 sm:h-8 md:h-12 aspect-[4/1] bg-[#DC2318] text-[#FDFDFE] rounded-full text-sm sm:text-md md:text-lg lg:text-xl font-extrabold justify-center items-center flex">Mas Hely</div>
@@ -27,7 +30,7 @@ export default function Menu({ selectedMenu, setSelectedMenu }) {
                     <div className="rounded-full aspect-square h-full sm:h-[95%] bg-[#DC2318] overflow-hidden flex justify-center items-center"><img src="https://cdn-icons-png.flaticon.com/512/3341/3341571.png" className="w-[95%] aspect-square" alt="" /></div>
                 </button>
             </div>
-            <div className="h-10 sm:h-8 md:h-12 aspect-square sm:aspect-[4/1] sm:bg-[#FDFDFE] rounded-full flex justify-center items-center font-bold">
+            <div onClick={() =>navigate("/login")} className="h-10 sm:h-8 md:h-12 aspect-square sm:aspect-[4/1] sm:bg-[#FDFDFE] rounded-full flex justify-center items-center font-bold hover:scale-90 transition-all duration-300">
                 <div className="bg-[#FDFDFE] h-full rounded-full aspect-square flex justify-center items-center"><img src="https://png.pngtree.com/png-clipart/20220921/ourmid/pngtree-spicy-fried-chicken-logo-png-image_6208307.png" className="w-[90%] aspect-square" alt="" /> </div>
             </div>
         </header>

@@ -1,34 +1,80 @@
-import { useState } from "react";
-import { minuman } from "../data/Data";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../data/firebase.js";  // sesuaikan path ini ke file firebase.js kamu
 
-export default function Minuman({addToOrder}) {
-  const [selectedItem, setSelectedItem] = useState(minuman[0]);
+export default function Makanan({ addToOrder }) {
+  const [minuman, setMakanan] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [selectedLevel, setSelectedLevel] = useState(minuman[0].level[0]);
-  
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchMakanan() {
+      try {
+        setLoading(true);
+        const makananCol = collection(db, "minuman");
+        const makananSnapshot = await getDocs(makananCol);
+        const makananList = makananSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setMakanan(makananList);
+        if (makananList.length > 0) {
+          setSelectedItem(makananList[0]);
+          if (makananList[0].level && makananList[0].level.length > 0) {
+            setSelectedLevel(makananList[0].level[0]);
+          }
+        }
+        setLoading(false);
+      } catch (err) {
+        setError("Gagal memuat data makanan");
+        setLoading(false);
+        console.error(err);
+      }
+    }
+    fetchMakanan();
+  }, []);
 
   const handleAddToOrder = () => {
-
-    addToOrder(selectedItem, selectedLevel, quantity);
+    if (!selectedItem) return;
+    const level = selectedItem.level ? selectedLevel : "-";
+    addToOrder(selectedItem, level, quantity);
   };
-
 
   const increaseQuantity = () => {
     setQuantity(prevQty => prevQty + 1);
   };
 
-  // Fungsi untuk mengurangi jumlah
   const decreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(prevQty => prevQty - 1);
     }
   };
 
-  // Fungsi saat item baru dipilih -> reset quantity ke 1
   const handleSelectItem = (item) => {
     setSelectedItem(item);
     setQuantity(1);
+    if (item.level && item.level.length > 0) {
+      setSelectedLevel(item.level[0]);
+    } else {
+      setSelectedLevel(null);
+    }
   };
+
+  if (loading) {
+    return <div className="p-4 text-center container rounded-xl h-auto md:h-[26rem] lg:h-[32rem] md:w-[70%] card">Loading menu...</div>;
+  }
+
+  if (error) {
+    return <div className="p-4 text-center text-red-500">{error}</div>;
+  }
+
+  if (!selectedItem) {
+    return <div className="p-4 text-center">Tidak ada menu tersedia</div>;
+  }
 
   return (
     <>
@@ -62,7 +108,7 @@ export default function Minuman({addToOrder}) {
             <p className="w-full text-xs font-medium mt-2">{selectedItem.deskripsi}</p>
             <div className="w-full h-1/2 flex flex-col justify-center items-center gap-2">
                 <h3 className="w-full text-sm font-bold mt-10">LEVEL</h3>
-              <div className="flex w-full h-1/2 gap-3">
+              <div className="flex w-full h-1/2 gap-3 overflow-x-scroll hide-bar">
               {selectedItem.level.map((level, index) => (
                 <div
                   key={index}
