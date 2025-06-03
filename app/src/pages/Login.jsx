@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
-import Order from "../assets/audio/order.mp3";
-import Berhasil from "../assets/audio/select.mp3";
+
 
 
 export default function AdminLogin() {
@@ -14,11 +13,6 @@ export default function AdminLogin() {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     if (isLoggedIn) navigate("/dashboard");
   }, [navigate]);
-
-  const playSound = (url) => {
-  const audio = new Audio(url);
-  audio.play();
-};
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -67,7 +61,6 @@ export default function AdminLogin() {
         <Toaster position="top-center" reverseOrder={false} />
         <button
           type="submit"
-          onClick={playSound(Order)}
           className="w-full h-12 bg-[#DC2318] text-white rounded-full font-semibold hover:scale-95 transition"
         >
           Login
