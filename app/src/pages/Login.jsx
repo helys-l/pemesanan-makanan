@@ -26,14 +26,11 @@ export default function AdminLogin() {
     if (username === "HELYAS" && password === "dagelan002") {
       localStorage.setItem("isLoggedIn", "true");
       toast.success("Login berhasil!");
-      playSound(Berhasil);
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
     } else {
       toast.error("Username atau password salah!");
-      playSound(Order);
-
     }
   };
 
@@ -70,6 +67,7 @@ export default function AdminLogin() {
         <Toaster position="top-center" reverseOrder={false} />
         <button
           type="submit"
+          onClick={playSound(Order)}
           className="w-full h-12 bg-[#DC2318] text-white rounded-full font-semibold hover:scale-95 transition"
         >
           Login
