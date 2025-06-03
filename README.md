@@ -29,7 +29,7 @@ Aplikasi ini merupakan platform sederhana untuk pemesanan ayam UMKM yang terdiri
 - 🔒 Login admin untuk keamanan akses dashboard
 - ⚙️ Realtime CRUD untuk data menu makanan
 - 📤 Integrasi langsung ke Google Spreadsheet untuk pencatatan pesanan pelanggan
-- ☁️ Deploy di Vercel, siap online kapan saja
+- ☁️ Deploy di railway, siap online kapan saja
 
 ---
 
