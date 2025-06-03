@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../data/firebase.js";  // sesuaikan path ini ke file firebase.js kamu
+import { db } from "../../data/firebase.js";  
+import { toast,Toaster } from 'react-hot-toast';
+
 
 export default function Makanan({ addToOrder }) {
   const [makanan, setMakanan] = useState([]);
@@ -38,11 +40,17 @@ export default function Makanan({ addToOrder }) {
     fetchMakanan();
   }, []);
 
-  const handleAddToOrder = () => {
-    if (!selectedItem) return;
-    const level = selectedItem.level ? selectedLevel : "-";
-    addToOrder(selectedItem, level, quantity);
-  };
+   const handleAddToOrder = () => {
+  if (!selectedItem) return;
+
+  const level = selectedItem.level ? selectedLevel : "-";
+  addToOrder(selectedItem, level, quantity);
+
+  // Ambil jumlah total pesanan saat ini dari localStorage
+
+  toast.success(`${quantity} ${selectedItem.nama}  ${selectedLevel} berhasil ditambahkan ke My Order!`);
+};
+
 
   const increaseQuantity = () => {
     setQuantity(prevQty => prevQty + 1);
@@ -78,10 +86,10 @@ export default function Makanan({ addToOrder }) {
 
   return (
     <div className="container rounded-xl shadow h-auto md:h-[26rem] lg:h-[32rem] md:w-[70%] card">
-      <h1 className="w-full h-10 md:h-12 pl-8 font-black flex items-center text-sm sm:text-md md:text-xl">Menu</h1>
+      <h1 className="w-full h-10 md:h-12 pl-8 font-black hidden sm:flex items-center text-sm sm:text-md md:text-xl">Menu</h1>
 
       {/* List Pilihan */}
-      <div className="w-[95%] mx-auto h-6 sm:h-8 flex gap-3 px-3 overflow-x-scroll hide-bar">
+      <div className="w-[95%] mx-auto h-6 sm:h-8 flex gap-3 mt-2 px-3 overflow-x-scroll hide-bar">
         {makanan.map((item) => (
           <div
             key={item.id}
@@ -99,14 +107,14 @@ export default function Makanan({ addToOrder }) {
 
       {/* Detail Makanan */}
       <div className="w-full mt-3 flex flex-col md:flex-row justify-center items-center gap-3 p-2 md:p-5 h-auto min-h-80 lg:h-96">
-        <div className="w-[98%] h-30 rounded-md md:w-[48%] md:h-72 flex justify-center lg:h-80 overflow-hidden">
-          <img src={selectedItem.gambar} className="w-auto h-full rounded-md" alt={selectedItem.nama} />
+        <div className="w-[98%] h-56 rounded-md md:w-[48%] md:h-72 flex justify-center lg:h-80 overflow-hidden">
+          <img src={selectedItem.gambar} className="w-full h-full rounded-md" alt={selectedItem.nama} />
         </div>
         <div className="w-[98%] h-80 md:w-[48%] md:h-[98%] flex flex-col">
           <h2 className="w-full font-black text-4xl">{selectedItem.nama}</h2>
           <p className="w-full text-xs font-medium mt-2">{selectedItem.deskripsi}</p>
           <div className="w-full h-1/2 flex flex-col justify-center items-center gap-2">
-            <h3 className="w-full text-sm font-bold mt-10">LEVEL</h3>
+            <h3 className="w-full text-sm font-bold hidden sm:block mt-10">LEVEL</h3>
             <div className="flex w-full h-1/2 gap-3 overflow-x-scrollhide-bar">
               {selectedItem.level?.map((level, index) => (
                 <div
@@ -151,9 +159,14 @@ export default function Makanan({ addToOrder }) {
                 <h3 className="text-[#fdfdfd] text-xs lg:text-sm">
                   Rp{(quantity * selectedItem.harga).toLocaleString()}
                 </h3>
-                <h3 className="text-[#fdfdfd] text-xs lg:text-sm group-hover:text-yellow-500 duration-500 font-medium">
+                <a href="#bottom" className="sm:hidden">
+                  <h3 id="bottom" className="text-[#fdfdfd]  text-xs lg:text-sm group-hover:text-yellow-500 duration-500 font-medium">
                   Add to order
-                </h3>
+                  </h3>
+                </a>
+                <h3 id="bottom" className="text-[#fdfdfd] hidden sm:block text-xs lg:text-sm group-hover:text-yellow-500 duration-500 font-medium">
+                  Add to order
+                  </h3>
               </div>
             </div>
           </div>

@@ -18,10 +18,6 @@ body {
 .icon {
   background-color: #FDFDFE ;
 }
-/* 
-
---hover menu hitam: #0E0D0D;
---icon: #FDFDFE;
---red: #DC2318;
---bg: #F0EFF3;
---card: #F8F7F9; */
+html {
+  scroll-behavior: smooth;
+}

@@ -101,13 +101,13 @@ export default function MyOrder({ orders, setOrders }) {
               <div className='h-[95%] w-2/3'>
                 <h3 className='text-sm font-medium md:text-xs lg:text-sm'>{item.nama}</h3>
                 {item.level !== undefined && (
-                  <p className='text-xs font-medium'>Level {item.level}</p>
+                  <p className='text-xs font-medium'>{item.level}</p>
                 )}
                 <div className='w-[90%] mx-auto h-10 flex justify-between items-center'>
                   <p className='text-xs text-[#DC2318]'>Rp{(item.harga * item.quantity).toLocaleString()}</p>
                   <div className="w-1/2 items-center aspect-[2/1] flex justify-between">
                     <button
-                      className={`h-8 w-8 rounded-full flex justify-center items-center ${item.quantity === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#dedee0]"} text-[#0e0d0d] text-lg`}
+                      className={`h-8 w-8 rounded-full flex justify-center items-center ${item.quantity === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#dedee0]"} text-[#0e0d0d] text-lg hover:scale-95`}
                       onClick={() => decreaseQuantity(index)}
                       disabled={item.quantity === 0}
                     >
@@ -115,7 +115,7 @@ export default function MyOrder({ orders, setOrders }) {
                     </button>
                     <div className='h-1/2 aspect-square flex justify-center items-center text-[#0e0d0d]'>{item.quantity}</div>
                     <button
-                      className="h-8 w-8 rounded-full flex justify-center items-center bg-[#dedee0] text-[#0e0d0d] text-lg"
+                      className="h-8 w-8 rounded-full flex justify-center items-center bg-[#dedee0] text-[#0e0d0d] text-lg hover:scale-95"
                       onClick={() => increaseQuantity(index)}
                     >
                       +
