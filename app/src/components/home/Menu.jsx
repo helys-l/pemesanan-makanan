@@ -1,7 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import Tap from "../../assets/audio/tap.mp3";
 
 export default function Menu({ selectedMenu, setSelectedMenu }) {
   const navigate = useNavigate();
+  const playSound = (url) => {
+  const audio = new Audio(url);
+  audio.play();
+};
+
 
   const getButtonClasses = (menuKey) => `
     h-[95%] w-1/3 shadow group rounded-full duration-300 font-black text-xs sm:text-md lg:text-lg gap-2 flex justify-center items-center
@@ -26,7 +32,10 @@ export default function Menu({ selectedMenu, setSelectedMenu }) {
       <div className="h-10 md:h-12 sm:gap-x-3 gap-x-6 aspect-[3/1] md:w-1/2 flex">
         {/* Makanan */}
         <button
-          onClick={() => setSelectedMenu('makanan')}
+          onClick={() => {
+            setSelectedMenu('makanan');
+            playSound(Tap);
+            }}
           className={getButtonClasses('makanan')}
         >
           <span className="hidden sm:block">Makanan</span>
@@ -41,7 +50,9 @@ export default function Menu({ selectedMenu, setSelectedMenu }) {
 
         {/* Minuman */}
         <button
-          onClick={() => setSelectedMenu('minuman')}
+          onClick={() => {setSelectedMenu('minuman')
+            playSound(Tap);}
+          }
           className={getButtonClasses('minuman')}
         >
           <span className="hidden sm:block">Minuman</span>
@@ -56,7 +67,9 @@ export default function Menu({ selectedMenu, setSelectedMenu }) {
 
         {/* Tambahan */}
         <button
-          onClick={() => setSelectedMenu('menuTambahan')}
+        onClick={() => {setSelectedMenu('menuTambahan');
+            playSound(Tap);}
+          }
           className={getButtonClasses('menuTambahan')}
         >
           <span className="hidden sm:block">Tambahan</span>
@@ -71,7 +84,9 @@ export default function Menu({ selectedMenu, setSelectedMenu }) {
       </div>
 
       <div
-        onClick={() => navigate("/login")}
+        onClick={() => {navigate("/login");
+            playSound(Tap);}
+        }
         className="h-10 sm:h-8 md:h-12 aspect-square sm:aspect-[4/1] sm:bg-[#FDFDFE] shadow rounded-full flex justify-center items-center group font-bold transition-all duration-300"
       >
         <div className="bg-[#FDFDFE] h-[150%] shadow rounded-full group-hover:scale-110 aspect-square flex justify-center items-center">

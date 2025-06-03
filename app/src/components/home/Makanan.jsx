@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../data/firebase.js"; 
 import { toast,Toaster } from 'react-hot-toast';
+import Tap from "../../assets/audio/tap.mp3";
+
+import Plus from "../../assets/audio/plus.mp3";
+import Minus from "../../assets/audio/min.mp3";
+import Select from "../../assets/audio/select.mp3";
 
 
 export default function Makanan({ addToOrder }) {
@@ -39,6 +44,11 @@ export default function Makanan({ addToOrder }) {
     }
     fetchMakanan();
   }, []);
+
+  const playSound = (url) => {
+  const audio = new Audio(url);
+  audio.play();
+};
 
   const handleAddToOrder = () => {
   if (!selectedItem) return;
@@ -100,7 +110,9 @@ export default function Makanan({ addToOrder }) {
                 ? "bg-[#FDFDFE] text-[#0e0d0d]"
                 : "bg-[#0E0D0D] text-[#FDFDFE] hover:bg-[#0e0d0d] hover:text-yellow-500 hover:scale-95"
             } duration-100`}
-            onClick={() => handleSelectItem(item)}
+            onClick={() => {handleSelectItem(item);
+                            playSound(Tap);
+            }}
           >
             {item.nama}
           </div>
@@ -121,7 +133,9 @@ export default function Makanan({ addToOrder }) {
               {selectedItem.level?.map((level, index) => (
                 <div
                   key={index}
-                  onClick={() => setSelectedLevel(level)}
+                  onClick={() => {setSelectedLevel(level);
+                    playSound(Tap);
+                  }}
                   className={`w-1/4 h-10 rounded-3xl shadow flex justify-center items-center font-bold text-sm cursor-pointer ${
                     level === selectedLevel
                       ? "bg-[#0E0D0D] text-yellow-500"
@@ -139,7 +153,9 @@ export default function Makanan({ addToOrder }) {
                   className={`h-8 w-8 rounded-full flex justify-center items-center shadow ${
                     quantity === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#dedee0] hover:scale-105"
                   } text-[#0e0d0d] text-lg`}
-                  onClick={decreaseQuantity}
+                  onClick={() => {decreaseQuantity();
+                    playSound(Minus);
+                  }}
                   disabled={quantity === 0}
                 >
                   -
@@ -149,14 +165,18 @@ export default function Makanan({ addToOrder }) {
                 </div>
                 <button
                   className="h-8 w-8 rounded-full flex justify-center items-center shadow bg-[#dedee0] text-[#0e0d0d] text-lg hover:scale-105"
-                  onClick={increaseQuantity}
+                  onClick={() => {increaseQuantity();
+                    playSound(Plus);}
+                  }
                 >
                   +
                 </button>
               </div>
               <div
                 className="md:w-full lg:w-1/2 w-1/2 sm:w-1/3 flex justify-between group hover:scale-95 items-center p-2 rounded-3xl bg-[#0e0d0d]"
-                onClick={handleAddToOrder}
+                onClick={() => {handleAddToOrder();
+                  playSound(Select);}
+                }
               >
                 <h3 className="text-[#fdfdfd] text-xs lg:text-sm">
                   Rp{(quantity * selectedItem.harga).toLocaleString()}

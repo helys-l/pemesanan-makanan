@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Combobox } from '@headlessui/react';
 import { toast, Toaster } from 'react-hot-toast';
+import Notif from "../../assets/audio/notif.mp3";
+import Soft from "../../assets/audio/tap.mp3";
+import Plus from "../../assets/audio/plus.mp3";
+import Minus from "../../assets/audio/min.mp3";
+import Berhasil from "../../assets/audio/soft.mp3";
+
 
 
 export default function MyOrder({ orders, setOrders }) {
@@ -10,11 +16,16 @@ export default function MyOrder({ orders, setOrders }) {
     const total = orders.reduce((sum, item) => sum + item.quantity * item.harga, 0);
     const options = Array.from({ length: 30 }, (_, i) => `No. ${i + 1}`);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const playSound = (url) => {
+    const audio = new Audio(url);
+    audio.play();}
   
     const increaseQuantity = (index) => {
       const updatedOrders = [...orders];
       updatedOrders[index].quantity += 1;
       setOrders(updatedOrders);
+      playSound(Plus);
     };
   
     const decreaseQuantity = (index) => {
@@ -22,6 +33,7 @@ export default function MyOrder({ orders, setOrders }) {
       if (updatedOrders[index].quantity > 1) {
         updatedOrders[index].quantity -= 1;
         setOrders(updatedOrders);
+        
       }
     };
 
@@ -29,8 +41,8 @@ export default function MyOrder({ orders, setOrders }) {
       const updatedOrders = [...orders];
       updatedOrders.splice(index, 1); // hapus satu item di posisi index
       setOrders(updatedOrders);
+      playSound(Soft);
     };
-
 
     
   
@@ -108,7 +120,9 @@ export default function MyOrder({ orders, setOrders }) {
                   <div className="w-1/2 items-center aspect-[2/1] flex justify-between">
                     <button
                       className={`h-8 w-8 rounded-full flex justify-center items-center ${item.quantity === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#dedee0]"} text-[#0e0d0d] text-lg hover:scale-95`}
-                      onClick={() => decreaseQuantity(index)}
+                      onClick={() => {decreaseQuantity(index);
+                        playSound(Minus);
+                      }}
                       disabled={item.quantity === 0}
                     >
                       -
@@ -145,15 +159,18 @@ export default function MyOrder({ orders, setOrders }) {
 
     if (orders.length === 0) {
       toast.error("Belum ada pesanan, silakan pesan dahulu!");
+      playSound(Notif);
       return;
     }
     if (!name.trim() || !selected) {
       toast.error("Isi Nama dan Nomor Tempat Duduk terlebih dahulu!");
+      playSound(Notif);
       return;
     }
 
     try {
       toast.success("Pesanan berhasil dikirim!");
+      playSound(Berhasil);
       setIsSubmitting(true);
 
       const form = document.forms['Pesanan'];
@@ -186,6 +203,7 @@ export default function MyOrder({ orders, setOrders }) {
 
     } catch (error) {
       toast.error("Terjadi kesalahan saat mengirim pesanan.");
+      playSound(Notif);
       console.error(error);
     } finally {
       setIsSubmitting(false); // aktifkan kembali tombol

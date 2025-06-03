@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
+import Order from "../assets/audio/order.mp3";
+import Berhasil from "../assets/audio/select.mp3";
+
 
 export default function AdminLogin() {
   const [username, setUsername] = useState("");
@@ -12,20 +15,29 @@ export default function AdminLogin() {
     if (isLoggedIn) navigate("/dashboard");
   }, [navigate]);
 
+  const playSound = (url) => {
+  const audio = new Audio(url);
+  audio.play();
+};
+
   const handleLogin = (e) => {
     e.preventDefault();
 
     if (username === "HELYAS" && password === "dagelan002") {
       localStorage.setItem("isLoggedIn", "true");
       toast.success("Login berhasil!");
+      playSound(Berhasil);
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
     } else {
       toast.error("Username atau password salah!");
+      playSound(Order);
+
     }
   };
 
+  
   return (
     <div className="min-h-screen bg-[#fff7f7] flex justify-center items-center">
       <form
