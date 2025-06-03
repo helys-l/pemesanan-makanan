@@ -43,15 +43,15 @@ export default function Sidebar({ activeMenu, setActiveMenu }) {
                 setActiveMenu(menu.key);
                 setIsOpen(false); // tutup sidebar setelah klik di mobile
               }}
-              className={`flex items-center gap-4 px-3 py-2 rounded-lg transition-all w-full text-left
+              className={`flex items-center gap-4 px-3 py-2 rounded-lg border-2 transition-all w-full text-left
                 ${
                   activeMenu === menu.key
                     ? "bg-white text-[#dc2318] font-bold"
                     : "hover:bg-[#fdfdfe] hover:text-[#dc2318]"
                 }`}
             >
-              <div className="text-lg">{menu.icon}</div>
-              <span className="hidden md:inline">{menu.label}</span>
+              <div className="text-lg border-2 rounded-full p-1">{menu.icon}</div>
+              <span className=" duration-700">{menu.label}</span>
             </button>
           ))}
         </nav>
@@ -60,7 +60,7 @@ export default function Sidebar({ activeMenu, setActiveMenu }) {
       {/* Backdrop untuk klik di luar sidebar agar tutup sidebar */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden"
+          className="fixed inset-0 bg-black opacity-50 z-30 md:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}

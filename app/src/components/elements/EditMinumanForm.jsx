@@ -52,7 +52,7 @@ export default function EditMakananForm({ item, onCancel, onSave }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black/50  flex justify-center items-center z-50">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md max-h-screen overflow-y-auto hide-bar"
