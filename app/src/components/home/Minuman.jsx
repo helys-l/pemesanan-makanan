@@ -65,7 +65,7 @@ export default function Makanan({ addToOrder }) {
   };
 
   if (loading) {
-    return <div className="p-4 text-center container rounded-xl h-auto md:h-[26rem] lg:h-[32rem] md:w-[70%] card">Loading menu...</div>;
+    return <div className="p-4 text-center shadow container rounded-xl h-auto md:h-[26rem] lg:h-[32rem] md:w-[70%] card">Loading menu...</div>;
   }
 
   if (error) {
@@ -77,7 +77,7 @@ export default function Makanan({ addToOrder }) {
   }
 
   return (
-    <div className="container rounded-xl h-auto md:h-[26rem] lg:h-[32rem] md:w-[70%] card">
+    <div className="container rounded-xl shadow h-auto md:h-[26rem] lg:h-[32rem] md:w-[70%] card">
       <h1 className="w-full h-10 md:h-12 pl-8 font-black flex items-center text-sm sm:text-md md:text-xl">Menu</h1>
 
       {/* List Pilihan */}
@@ -85,11 +85,11 @@ export default function Makanan({ addToOrder }) {
         {makanan.map((item) => (
           <div
             key={item.id}
-            className={`h-full w-auto min-w-36 md:min-w-40 rounded-full flex justify-center items-center font-medium text-xs sm:text-md px-3 cursor-pointer ${
+            className={`h-[98%] w-auto min-w-36 md:min-w-40 rounded-full shadow flex justify-center items-center font-medium text-xs sm:text-md px-3 cursor-pointer ${
               selectedItem.nama === item.nama
                 ? "bg-[#FDFDFE] text-[#0e0d0d]"
-                : "bg-[#0E0D0D] text-[#FDFDFE] hover:bg-[#FDFDFE] hover:text-[#0e0d0d]"
-            } duration-500 hover:border`}
+                : "bg-[#0E0D0D] text-[#FDFDFE] hover:bg-[#0e0d0d] hover:text-yellow-500 hover:scale-95"
+            } duration-100`}
             onClick={() => handleSelectItem(item)}
           >
             {item.nama}
@@ -99,7 +99,7 @@ export default function Makanan({ addToOrder }) {
 
       {/* Detail Makanan */}
       <div className="w-full mt-3 flex flex-col md:flex-row justify-center items-center gap-3 p-2 md:p-5 h-auto min-h-80 lg:h-96">
-        <div className="w-[98%] h-30 rounded-md md:w-[48%] md:h-72 flex justify-center lg:h-80 overflow-hidden">
+        <div className="w-[98%] h-30 rounded-md md:w-[48%] md:h-72 flex justify-center lg:h-80 overflow-hidden shadow-md">
           <img src={selectedItem.gambar} className="w-auto h-full rounded-md" alt={selectedItem.nama} />
         </div>
         <div className="w-[98%] h-80 md:w-[48%] md:h-[98%] flex flex-col">
@@ -112,11 +112,11 @@ export default function Makanan({ addToOrder }) {
                 <div
                   key={index}
                   onClick={() => setSelectedLevel(level)}
-                  className={`w-1/4 h-10 rounded-3xl border flex justify-center items-center font-bold text-sm cursor-pointer ${
+                  className={`w-1/4 h-10 rounded-3xl shadow flex justify-center items-center font-bold text-sm cursor-pointer ${
                     level === selectedLevel
-                      ? "bg-[#0E0D0D] text-[#fdfdfd]"
-                      : "hover:bg-[#0E0D0D] hover:text-[#fdfdfd]"
-                  } duration-500`}
+                      ? "bg-[#0E0D0D] text-yellow-500"
+                      : "hover:bg-[#0E0D0D] hover:text-white hover:scale-95"
+                  } duration-100`}
                 >
                   {level}
                 </div>
@@ -126,8 +126,8 @@ export default function Makanan({ addToOrder }) {
             <div className="w-full flex justify-center items-center gap-x-2 lg:gap-x-4 h-auto">
               <div className="w-1/3 lg:w-1/4 items-center aspect-[2/1] flex justify-between">
                 <button
-                  className={`h-8 w-8 rounded-full flex justify-center items-center ${
-                    quantity === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#dedee0]"
+                  className={`h-8 w-8 rounded-full flex justify-center items-center shadow ${
+                    quantity === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#dedee0] hover:scale-105"
                   } text-[#0e0d0d] text-lg`}
                   onClick={decreaseQuantity}
                   disabled={quantity === 0}
@@ -138,14 +138,14 @@ export default function Makanan({ addToOrder }) {
                   {quantity}
                 </div>
                 <button
-                  className="h-8 w-8 rounded-full flex justify-center items-center bg-[#dedee0] text-[#0e0d0d] text-lg"
+                  className="h-8 w-8 rounded-full flex justify-center items-center shadow bg-[#dedee0] text-[#0e0d0d] text-lg hover:scale-105"
                   onClick={increaseQuantity}
                 >
                   +
                 </button>
               </div>
               <div
-                className="md:w-full lg:w-1/2 w-1/2 sm:w-1/3 flex justify-between group items-center p-2 rounded-3xl bg-[#0e0d0d]"
+                className="md:w-full lg:w-1/2 w-1/2 sm:w-1/3 flex justify-between group hover:scale-95 items-center p-2 rounded-3xl bg-[#0e0d0d]"
                 onClick={handleAddToOrder}
               >
                 <h3 className="text-[#fdfdfd] text-xs lg:text-sm">

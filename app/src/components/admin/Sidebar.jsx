@@ -43,14 +43,14 @@ export default function Sidebar({ activeMenu, setActiveMenu }) {
                 setActiveMenu(menu.key);
                 setIsOpen(false); // tutup sidebar setelah klik di mobile
               }}
-              className={`flex items-center gap-4 px-3 py-2 rounded-lg border-2 transition-all w-full text-left
+              className={`flex items-center gap-4 px-3 py-2 rounded-lg shadow transition-all w-full text-left
                 ${
                   activeMenu === menu.key
                     ? "bg-white text-[#dc2318] font-bold"
                     : "hover:bg-[#fdfdfe] hover:text-[#dc2318]"
                 }`}
             >
-              <div className="text-lg border-2 rounded-full p-1">{menu.icon}</div>
+              <div className="text-lg shadow rounded-full p-1">{menu.icon}</div>
               <span className=" duration-700">{menu.label}</span>
             </button>
           ))}

@@ -115,7 +115,7 @@ const handleDelete = async (item) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {data.map((item) => (
-  <div key={item.id} className="border rounded-xl p-4 shadow hover:shadow-lg transition-all">
+  <div key={item.id} className="shadow rounded-xl p-4 hover:shadow-lg transition-all">
     <img src={item.gambar} alt={item.nama} className="w-full h-40 object-cover rounded-lg mb-3" />
     
     <h3 className="font-bold text-lg text-[#DC2318]">{item.nama}</h3>
@@ -158,7 +158,7 @@ const handleDelete = async (item) => {
         {/* Card untuk tombol tambah */}
         <div
           onClick={() => setAddingNew(true)}
-          className="border border-dashed rounded-xl p-4 shadow min-h-[240px] h-full cursor-pointer flex justify-center items-center text-[#DC2318] text-4xl font-bold hover:bg-[#ffe5e5] transition-all select-none"
+          className="border border-dashed rounded-xl p-4 shadow-md min-h-[240px] h-full cursor-pointer flex justify-center items-center text-[#DC2318] text-4xl font-bold hover:bg-[#ffe5e5] transition-all select-none"
           
           title="Tambah Menu Baru"
         >

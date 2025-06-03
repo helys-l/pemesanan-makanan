@@ -36,7 +36,7 @@ export default function MyOrder({ orders, setOrders }) {
   
     return (
       
-      <div className="Container rounded-xl h-auto py-6 md:min-h-[32rem] gap-3 md:w-[30%] card">
+      <div className="Container rounded-xl h-auto py-6 md:min-h-[32rem] gap-3 md:w-[30%] card shadow">
         <form name="Pesanan" className="hidden">
           <input type="text" name="Nama Pemesan" />
           <input type="text" name="Tanggal Pemesanan" />
@@ -49,7 +49,7 @@ export default function MyOrder({ orders, setOrders }) {
         <h1 className="w-full h-10 md:h-12 pl-8 font-black flex items-center text-sm sm:text-md md:text-xl">My Order</h1>
         <input
         type="text"
-        className='w-[90%] ml-5  h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318] mb-3'
+        className='w-[90%] ml-5  h-10 rounded-lg z-10 shadow bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318] mb-3'
         placeholder='Masukkan Nama'
         value={name}
             onChange={(e) => setName(e.target.value)}
@@ -57,7 +57,7 @@ export default function MyOrder({ orders, setOrders }) {
             <Combobox value={selected} onChange={setSelected}>
             <div className="relative w-[90%] ml-5 mb-2">
                 <Combobox.Input
-                className="w-full h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]"
+                className="w-full h-10 rounded-lg z-10 bg-[#f5f5f5] shadow px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]"
                 displayValue={(seat) => seat}
                 onChange={() => {}}
                 placeholder="Pilih No. Tempat Duduk"
@@ -81,15 +81,15 @@ export default function MyOrder({ orders, setOrders }) {
         </Combobox>
         <input
             type="text"
-            className='w-[90%] ml-5  h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]'
+            className='w-[90%] ml-5  h-10 rounded-lg z-10 shadow bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]'
             placeholder='Catatan (opsional)'
             value={note}
             onChange={(e) => setNote(e.target.value)}
             />
-        <p className='w-full text-sm font-medium pl-8 text-stone-500'>{orders.length} Positions</p>
+        <p className='w-full text-sm font-medium pl-8 mt-1 text-stone-500'>{orders.length} Positions</p>
         <div className='w-[80%] min-h-[40%] z-0 h-auto py-3 mx-auto mt-3 hide-bar overflow-y-scroll'>
           {orders.map((item, index) => (
-            <div key={index} className='relative z-0 w-full h-20 rounded-lg gap-3 mt-2 border border-dashed flex justify-between px-2 items-center'>
+            <div key={index} className='relative z-0 w-full h-20 rounded-xs shadow gap-3 mt-2 border border-dashed flex justify-between px-2 items-center'>
               <button
                 className="absolute -top-2 right-2 w-6 h-6 bg-[#DC2318] text-white rounded-full text-xs flex items-center justify-center shadow-md hover:scale-110"
                 onClick={() => removeItem(index)}

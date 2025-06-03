@@ -56,7 +56,7 @@ const handleDelete = async (item) => {
             });
 
             try {
-              await deleteDoc(doc(db, "makanan", item.id));
+              await deleteDoc(doc(db, "menuTambahan", item.id));
               setData(prev => prev.filter(i => i.id !== item.id));
               toast.success(`"${item.nama}" berhasil dihapus`, {
                 id: loadingId,
@@ -114,7 +114,7 @@ const handleDelete = async (item) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 {data.map((item) => (
-  <div key={item.id} className="border rounded-xl p-4 shadow hover:shadow-lg transition-all">
+  <div key={item.id} className=" rounded-xl p-4 shadow hover:shadow-lg transition-all">
     <img src={item.gambar} alt={item.nama} className="w-full h-40 object-cover rounded-lg mb-3" />
     
     <h3 className="font-bold text-lg text-[#DC2318]">{item.nama}</h3>
@@ -157,7 +157,7 @@ const handleDelete = async (item) => {
         {/* Card untuk tombol tambah */}
         <div
           onClick={() => setAddingNew(true)}
-          className="border border-dashed rounded-xl h-full min-h-[240px] p-4 shadow cursor-pointer flex justify-center items-center text-[#DC2318] text-4xl font-bold hover:bg-[#ffe5e5] transition-all select-none"
+          className="border border-dashed rounded-xl h-full min-h-[240px] p-4 shadow-md cursor-pointer flex justify-center items-center text-[#DC2318] text-4xl font-bold hover:bg-[#ffe5e5] transition-all select-none"
           title="Tambah Menu Baru"
         >
           +
