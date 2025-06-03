@@ -79,6 +79,13 @@ export default function MyOrder({ orders, setOrders }) {
                 </Combobox.Options>
             </div>
         </Combobox>
+        <input
+            type="text"
+            className='w-[90%] ml-5  h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]'
+            placeholder='Catatan (opsional)'
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            />
         <p className='w-full text-sm font-medium pl-8 text-stone-500'>{orders.length} Positions</p>
         <div className='w-[80%] min-h-[40%] z-0 h-auto py-3 mx-auto mt-3 hide-bar overflow-y-scroll'>
           {orders.map((item, index) => (
@@ -120,13 +127,7 @@ export default function MyOrder({ orders, setOrders }) {
           ))}
         </div>
 
-        <input
-            type="text"
-            className='w-[90%] ml-5  h-10 rounded-lg z-10 bg-[#f5f5f5] px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#DC2318]'
-            placeholder='Catatan'
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            />
+        
         <div className='w-full h-12 flex justify-between items-center px-10'>
           <p className='text-xs md:text-lg font-medium'>Total</p>
           <p className='text-xs md:text-lg font-medium'>Rp{total.toLocaleString()}</p>
