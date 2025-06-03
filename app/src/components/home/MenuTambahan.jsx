@@ -99,7 +99,7 @@ export default function Makanan({ addToOrder }) {
 
       {/* Detail Makanan */}
       <div className="w-full mt-3 flex flex-col md:flex-row justify-center items-center gap-3 p-2 md:p-5 h-auto min-h-80 lg:h-96">
-        <div className="w-[98%] h-30 rounded-md md:w-[48%] md:h-72 flex justify-center lg:h-80 overflow-hidden shadow-md">
+        <div className="w-[98%] h-30 rounded-md md:w-[48%] md:h-72 flex justify-center lg:h-80 overflow-hidden">
           <img src={selectedItem.gambar} className="w-auto h-full rounded-md" alt={selectedItem.nama} />
         </div>
         <div className="w-[98%] h-80 md:w-[48%] md:h-[98%] flex flex-col">
